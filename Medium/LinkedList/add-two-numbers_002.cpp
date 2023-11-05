@@ -32,17 +32,14 @@ struct ListNode {
 //     std::cout << ss.str();
 // }
 
-class Solution
-{
-public:
-    ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
-    {
+class Solution {
+  public:
+    ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
         ListNode *head = nullptr;
         ListNode *current = nullptr;
         int current_carry = 0;
 
-        while (l1 || l2)
-        {
+        while (l1 || l2) {
             auto [new_node, new_carry] = addNodes(l1, l2, current_carry);
 
             if (!head)
@@ -59,17 +56,15 @@ public:
                 l2 = l2->next;
         }
 
-        if (current_carry)
-        {
+        if (current_carry) {
             current->next = new ListNode(current_carry);
         }
 
         return head;
     }
 
-private:
-    std::pair<int, int> getCarry(int x)
-    {
+  private:
+    std::pair<int, int> getCarry(int x) {
         if (x > 19)
             throw std::runtime_error("Sum cannot be greater than 19");
 
@@ -79,8 +74,7 @@ private:
         return {x, carry};
     }
 
-    std::pair<ListNode *, int> addNodes(ListNode *l1, ListNode *l2, int carry)
-    {
+    std::pair<ListNode *, int> addNodes(ListNode *l1, ListNode *l2, int carry) {
         int sum = carry;
 
         if (l1)
