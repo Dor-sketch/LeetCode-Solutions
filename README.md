@@ -23,6 +23,10 @@ Below is a list of problems I've tackled, categorized by difficulty and topic:
 
 - **Arrays** 🧮
   - Last Moment Before All Ants Fall Out of a Plank ([Problem](https://leetcode.com/problems/last-moment-before-all-ants-fall-out-of-a-plank/), [Solution](Medium/Arrays/last-moment-before-all-ants-fall-out-of-a-plank_1503.cpp))
+  - Find the Winner of an Array Game ([Problem](https://leetcode.com/problems/find-the-winner-of-an-array-game/), [Solution](Medium/Arrays/find-the-winner-of-an-array-game_1535.cpp))
+
+- **Design** 🎨
+  - Seat Reservation Manager ([Problem](https://leetcode.com/problems/seat-reservation-manager/), [Solution](Medium/Design/seat-reservation-manager_1845.cpp))
 
 ## Contributing 💡
 
