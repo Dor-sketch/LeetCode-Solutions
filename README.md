@@ -2,6 +2,10 @@
 
 Welcome to my LeetCode solutions repository! Here, I document my journey as a senior software engineering student, tackling algorithmic challenges and enhancing my problem-solving capabilities.
 
+---
+
+![image](https://github.com/Dor-sketch/LeetCode-Solutions/assets/138825033/3215ba9c-d85f-4083-9763-c0e87b479f54)
+
 ## What's Inside 📂
 
 The repository is systematically organized by difficulty, each containing a subdivision by topics or data structures like so:
