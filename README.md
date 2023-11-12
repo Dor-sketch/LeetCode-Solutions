@@ -1,12 +1,28 @@
 # LeetCode Solutions 🚀
 
-Welcome to my LeetCode solutions repository! Here, I document my journey as a senior software engineering student, tackling algorithmic challenges and enhancing my problem-solving capabilities.
+Welcome to my LeetCode solutions repository! Here, I document my journey as a senior software engineering student, tackling algorithmic challenges and enhancing my problem-solving capabilities. As part of this journey, I've explored various algorithmic domains, including graph theory and its applications.
 
 ---
 
 ![image](https://github.com/Dor-sketch/LeetCode-Solutions/assets/138825033/3215ba9c-d85f-4083-9763-c0e87b479f54)
 
-## What's Inside 📂
+## Graph Algorithms: An Overview 🌐
+
+Graph algorithms are a fundamental part of computer science, which I've explored and implemented in this repository. These algorithms are crucial for solving complex problems that involve network structures like social networks, computer networks, and biological networks. Below is a brief overview of some of the key graph algorithms and their applications, for examples see [main.cpp](Algorithms/main.cpp):
+
+- **Depth-First Search (DFS)**: This algorithm traverses a graph deeply, exploring as far as possible along each branch before backtracking. It's used in solving puzzles, analyzing networks, and in game playing algorithms.
+
+- **Breadth-First Search (BFS)**: This algorithm traverses a graph broadly, visiting all neighbors at the current depth level before moving to nodes at the next depth level. It's widely used in shortest path algorithms and in social networking applications for finding people within a certain number of steps from a person.
+
+- **Dijkstra's Algorithm**: This is a famous algorithm for finding the shortest path between nodes in a weighted graph. It's widely used in GPS systems for finding the shortest driving route between locations.
+
+- **Bellman-Ford Algorithm**: An algorithm that computes shortest paths from a single source vertex to all of the other vertices in a weighted graph. It's capable of handling graphs with negative weight edges.
+
+- **Floyd-Warshall Algorithm**: A dynamic programming algorithm for finding shortest paths in a weighted graph with positive or negative edge weights (but with no negative cycles).
+
+These algorithms are implemented in my repository, demonstrating my understanding of graph theory and its practical applications in solving real-world problems.
+
+## Inside the Repository 📂
 
 The repository is systematically organized by difficulty, each containing a subdivision by topics or data structures like so:
 
