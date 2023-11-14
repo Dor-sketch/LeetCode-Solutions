@@ -3,12 +3,19 @@ Downloads all accepted submissions from LeetCode.
 """
 import time
 import os
+import logging
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
+
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
+
 
 USERNAME = 'username'  # <- Replace with your username
 PASSWORD = 'password'  # <- Replace with your password
@@ -35,7 +42,8 @@ def update_problems_list(problem_name, problem_link, problem_file_name=None):
             f.write("| ------- | -------- |\n")
 
     with open(PROBLEMS_LIST_FILE, 'a', encoding='utf-8') as f:
-        f.write(f"| [{problem_name}]({problem_link}) | [{filename}]({file_link}) |\n")
+        f.write(
+            f"| [{problem_name}]({problem_link}) | [{filename}]({file_link}) |\n")
 
 
 def download_submissions(username, password):
@@ -60,20 +68,32 @@ def download_submissions(username, password):
         password_field.send_keys(password)
         password_field.send_keys(Keys.RETURN)
 
+        page_number = 2  # Start from the first page
+
         while True:
+
             # Wait for redirection to submissions page
-            time.sleep(10)
+            time.sleep(5)
+
+            current_page_url = f"https://leetcode.com/submissions/#/{page_number}"
+            logging.debug(f"Navigating to page: {current_page_url}")
+            driver.get(current_page_url)
+            time.sleep(5)  # Adjust sleep time as needed
 
             # Store the links first
             links = []
-            existing_filenames = set(os.listdir(PROBLEMS_DIR)) if os.path.exists(PROBLEMS_DIR) else set()
+            existing_filenames = set(os.listdir(PROBLEMS_DIR)) if os.path.exists(
+                PROBLEMS_DIR) else set()
 
-            rows = driver.find_elements(By.XPATH, "//table[contains(@class, 'table')]/tbody/tr")
+            rows = driver.find_elements(
+                By.XPATH, "//table[contains(@class, 'table')]/tbody/tr")
             for row in rows:
                 status = row.find_element(By.XPATH, ".//td[3]").text.strip()
                 if "Accepted" in status:
-                    link = row.find_element(By.XPATH, ".//td[3]//a").get_attribute('href')
-                    problem_name = row.find_element(By.XPATH, ".//td[2]").text.strip().replace(' ', '_').replace('.', '')
+                    link = row.find_element(
+                        By.XPATH, ".//td[3]//a").get_attribute('href')
+                    problem_name = row.find_element(
+                        By.XPATH, ".//td[2]").text.strip().replace(' ', '_').replace('.', '')
 
                     # Generate a unique filename
                     filename = f"{problem_name}.cpp"
@@ -88,13 +108,11 @@ def download_submissions(username, password):
                     # Append (link, problem_name, filename) tuple to links
                     links.append((link, problem_name, filename))
 
-            cur_page = SUBMISSIONS_URL
-
             # Process each link
             for link, problem_name, filename in links:
 
                 driver.get(link)
-                time.sleep(10)
+                time.sleep(5)
 
                 code_lines = driver.find_elements(
                     By.CLASS_NAME, 'ace_line')
@@ -117,22 +135,16 @@ def download_submissions(username, password):
 
                 # Go back to the submissions list after processing each link
                 # to avoid stale element reference error
-                driver.get(cur_page)
+                driver.get(current_page_url)
                 WebDriverWait(driver, 20).until(
                     EC.presence_of_element_located(
                         (By.ID, 'submission-list-app'))
                 )
-                time.sleep(10)  # Wait for page to load; adjust as needed
+                time.sleep(5)  # Wait for page to load; adjust as needed
 
-            try:
-                # Look for the "Older" or "Next Page" button/link
-                cur_page = driver.find_element(
-                    By.XPATH, "//a[@href and contains(., 'Older')]")
-                cur_page.click()
-                time.sleep(2)  # Wait for page to load; adjust as needed
-            except NoSuchElementException:
-                # If the "Next Page" link is not found, break from the loop
-                break
+            # Clear the links list
+            links.clear()
+            page_number += 1
 
     except NoSuchElementException as e:
         print(f"A NoSuchElementException occurred: {e}")
