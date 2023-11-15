@@ -14,15 +14,14 @@ class Graph {
 
     // Utility
     void addEdge(int u, int v, int w);
-    void printGraph();
-    void printGraphLevels(const std::vector<int> &levels);
+    void printAdjacencyLists();
 
     // Algorithms
     void BFS(int s);
     void DFS(int s); // to init the DFS
     void Dijkstra(int s);
     void BellmanFord(int s);
-    // void FloydWarshall();
+    void FloydWarshall();
     // void Prim();
     // void Kruskal();
     // void TopologicalSort();

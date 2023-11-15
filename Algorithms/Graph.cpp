@@ -1,11 +1,20 @@
 #include "Graph.hpp"
-#include <queue>
-#include <set>
-#include <unordered_set>
+#include "TreeVisualizer.hpp"
+#include <iomanip>
 
-// using initializer list is more efficient than using assignment in constructor
-// because it directly calls the copy constructor of the member variable
-// instead of calling the default constructor and then the assignment operator
+// Define color for the node
+constexpr char YELLOW[] = "\033[1;33m";
+constexpr char RESET[] = "\033[0m";
+constexpr char OPEN_BRACES[] = "\033[1m\033[1;32m(";
+constexpr char CLOSE_BRACES[] = ")\033[0m ";
+constexpr char START_ARROW[] = "\033[1;33m---";
+constexpr char RESET_ARROW[] = "---►\033[0m";
+constexpr char LONG_ARROW[] = "\033[1;33m------►\033[0m";
+
+// using initializer list is more efficient than using assignment in
+// constructor because it directly calls the copy constructor of the member
+// variable instead of calling the default constructor and then the
+// assignment operator
 Graph::Graph(std::vector<std::vector<std::pair<int, int>>> adjLists_)
     : adjLists_(adjLists_), V_(adjLists_.size()) {}
 
@@ -17,53 +26,37 @@ void Graph::addEdge(int u, int v, int w) {
     adjLists_[u].push_back(std::make_pair(v, w));
 }
 
-// text only
-void Graph::printGraph() {
-    std::cout << "node | edges" << std::endl;
+void Graph::printAdjacencyLists() {
+    std::cout
+        << "\033[1;32mNode\033[0m | \033[1;34mEdges\033[0m\n"; // Using ANSI
+                                                               // color codes
     for (int i = 0; i < V_; i++) {
-        std::cout << "(" << i << ") ";
+        std::cout << OPEN_BRACES << i << CLOSE_BRACES;
         bool firstEdge = true;
         for (const auto &edge : adjLists_[i]) {
             if (!firstEdge) {
                 std::cout << " | ";
             }
-            std::cout << "---" << edge.second << "--->(" << edge.first << ")";
+            std::cout << START_ARROW << std::setw(2) << edge.second
+                      << RESET_ARROW << OPEN_BRACES << edge.first
+                      << CLOSE_BRACES;
             firstEdge = false;
         }
         std::cout << std::endl;
     }
 }
 
-// visual representing
-void Graph::printGraphLevels(const std::vector<int> &levels) {
-    int max_level = *std::max_element(levels.begin(), levels.end());
-    for (int level = 0; level <= max_level; ++level) {
-        int indent = (1 << (max_level - level)) - 1; // Using bitwise shift
-        bool firstNode = true;
-        for (int i = 0; i < V_; ++i) {
-            if (levels[i] == level) {
-                if (firstNode) {
-                    std::cout << std::string(indent * 4, ' ') << i;
-                    firstNode = false;
-                } else {
-                    indent = (1 << (max_level - level + 1)) -
-                             1; // Using bitwise shift
-                    std::cout << std::string(indent * 4, ' ') << i;
-                }
-            }
-        }
-        std::cout << std::endl;
-    }
-}
+// ============ Algorithms ===============
 
 void Graph::DFS(int startVertex) {
     std::vector<bool> visited(V_, false);
     DFSUtil(startVertex, visited);
+    std::cout << std::endl;
 }
 
 void Graph::DFSUtil(int vertex, std::vector<bool> &visited) {
     visited[vertex] = true;
-    std::cout << vertex << " ";
+    std::cout << LONG_ARROW << OPEN_BRACES << vertex << CLOSE_BRACES;
 
     // Iterate through each pair (neighbor, weight) in the adjacency list of the
     // current vertex
@@ -80,13 +73,14 @@ void Graph::DFSUtil(int vertex, std::vector<bool> &visited) {
 // sort nodes by number of edges from s
 // for unweighted graph, this is the shortest path from s to other nodes
 void Graph::BFS(int s) {
-    std::vector<int> levels(V_, -1);
+
+    std::vector<TreeVisualizer::NodeInfo> shortest_path(V_);
     std::vector<bool> visited(V_, false);
     std::queue<int> q;
 
     q.push(s);
     visited[s] = true;
-    levels[s] = 0;
+    shortest_path[s] = {0, s};
 
     while (!q.empty()) {
         int cur_node = q.front();
@@ -98,11 +92,16 @@ void Graph::BFS(int s) {
             if (!visited[adjLists_node]) {
                 visited[adjLists_node] = true;
                 q.push(adjLists_node);
-                levels[adjLists_node] = levels[cur_node] + 1;
+                // updating to track paths in addition to weights
+                shortest_path[adjLists_node].parent = cur_node;
+                shortest_path[adjLists_node].level =
+                    (shortest_path[cur_node].level + 1);
             }
         }
     }
-    printGraphLevels(levels);
+
+    TreeVisualizer visualizer(shortest_path);
+    visualizer.visualizeTree();
 }
 
 // for weighted graph, this is the shortest path from s to other nodes
@@ -135,17 +134,63 @@ void Graph::Dijkstra(int s) {
         }
     }
 
+    std::cout << OPEN_BRACES << s << CLOSE_BRACES;
+
     // print the calculated shortest distances
-    std::cout << "Vertex Distance from Source " << s << std::endl;
     for (int i = 0; i < V_; ++i) {
-        std::cout << i << "\t\t" << distances[i] << std::endl;
+        std::cout << START_ARROW << std::setw(2) << distances[i] << RESET_ARROW
+                  << OPEN_BRACES << i << CLOSE_BRACES;
     }
 
     std::cout << std::endl;
 }
 
+void Graph::FloydWarshall() {
+    // Initialize the solution matrix
+    std::vector<std::vector<int>> dist(
+        V_, std::vector<int>(V_, std::numeric_limits<int>::max()));
+
+    // Set distance from each vertex to itself as 0
+    for (int i = 0; i < V_; ++i) {
+        dist[i][i] = 0;
+    }
+
+    // Initialize with given graph's edges
+    for (int i = 0; i < V_; ++i) {
+        for (const auto &neighbor : adjLists_[i]) {
+            dist[i][neighbor.first] = neighbor.second;
+        }
+    }
+
+    // Floyd-Warshall algorithm
+    for (int k = 0; k < V_; ++k) {
+        for (int i = 0; i < V_; ++i) {
+            for (int j = 0; j < V_; ++j) {
+                if (dist[i][k] != std::numeric_limits<int>::max() &&
+                    dist[k][j] != std::numeric_limits<int>::max()) {
+                    dist[i][j] = std::min(dist[i][j], dist[i][k] + dist[k][j]);
+                }
+            }
+        }
+    }
+
+    // Print the shortest distances
+    for (size_t i = 0; i < dist.size(); ++i) {
+        const auto &row = dist[i];
+        std::cout << "Row " << OPEN_BRACES << i << CLOSE_BRACES << LONG_ARROW
+                  << "| ";
+        for (const auto &elem : row) {
+            std::cout << YELLOW << std::setw(2) << elem << RESET << " ";
+        }
+        std::cout << "|" << std::endl;
+    }
+
+    // Add a check for negative weight cycles (optional)
+}
+
 int main() {
-    Graph g(5);
+    int V = 5;
+    Graph g(V);
     g.addEdge(0, 1, 10);
     g.addEdge(0, 4, 5);
     g.addEdge(1, 2, 1);
@@ -157,10 +202,22 @@ int main() {
     g.addEdge(4, 2, 9);
     g.addEdge(4, 3, 2);
 
-    g.printGraph();
+    g.printAdjacencyLists();
+
+    std::cout << "BFS" << std::endl;
     g.BFS(0);
-    g.DFS(0);
-    g.Dijkstra(0);
+    std::cout << std::endl;
+
+    std::cout << "DFS" << std::endl;
+    for (int i = 0; i < V; ++i)
+        g.DFS(i);
+
+    std::cout << "Dijkstra" << std::endl;
+    for (int i = 0; i < V; ++i)
+        g.Dijkstra(i);
+
+    std::cout << "FloydWarshall" << std::endl;
+    g.FloydWarshall();
 
     return 0;
 }
