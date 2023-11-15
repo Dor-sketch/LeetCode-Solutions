@@ -1,5 +1,4 @@
 #include "Graph.hpp"
-#include "TreeVisualizer.hpp"
 #include <iomanip>
 
 // Define color for the node
@@ -10,6 +9,8 @@ constexpr char CLOSE_BRACES[] = ")\033[0m ";
 constexpr char START_ARROW[] = "\033[1;33m---";
 constexpr char RESET_ARROW[] = "---►\033[0m";
 constexpr char LONG_ARROW[] = "\033[1;33m------►\033[0m";
+constexpr char ADJ_LIST_TITLE[] =
+    "\033[1;32mNode\033[0m | \033[1;34mEdges\033[0m\n";
 
 // using initializer list is more efficient than using assignment in
 // constructor because it directly calls the copy constructor of the member
@@ -27,9 +28,7 @@ void Graph::addEdge(int u, int v, int w) {
 }
 
 void Graph::printAdjacencyLists() {
-    std::cout
-        << "\033[1;32mNode\033[0m | \033[1;34mEdges\033[0m\n"; // Using ANSI
-                                                               // color codes
+    std::cout << ADJ_LIST_TITLE;
     for (int i = 0; i < V_; i++) {
         std::cout << OPEN_BRACES << i << CLOSE_BRACES;
         bool firstEdge = true;
@@ -72,7 +71,24 @@ void Graph::DFSUtil(int vertex, std::vector<bool> &visited) {
 
 // sort nodes by number of edges from s
 // for unweighted graph, this is the shortest path from s to other nodes
-void Graph::BFS(int s) {
+std::vector<int> Graph::BFS(int s) {
+    // Perform BFS traversal
+    auto shortest_path = BFSUtil(s);
+
+    // Visualize tree
+    TreeVisualizer visualizer(shortest_path);
+    visualizer.visualizeTree();
+
+    // Extract levels from shortest_path and return
+    std::vector<int> levels(V_);
+    for (int i = 0; i < V_; ++i) {
+        levels[i] = shortest_path[i].level;
+    }
+
+    return levels;
+}
+
+std::vector<TreeVisualizer::NodeInfo> Graph::BFSUtil(int s) {
 
     std::vector<TreeVisualizer::NodeInfo> shortest_path(V_);
     std::vector<bool> visited(V_, false);
@@ -99,9 +115,7 @@ void Graph::BFS(int s) {
             }
         }
     }
-
-    TreeVisualizer visualizer(shortest_path);
-    visualizer.visualizeTree();
+    return shortest_path;
 }
 
 // for weighted graph, this is the shortest path from s to other nodes
@@ -145,6 +159,7 @@ void Graph::Dijkstra(int s) {
     std::cout << std::endl;
 }
 
+// for graphs whith nagative edges
 void Graph::FloydWarshall() {
     // Initialize the solution matrix
     std::vector<std::vector<int>> dist(
@@ -188,36 +203,7 @@ void Graph::FloydWarshall() {
     // Add a check for negative weight cycles (optional)
 }
 
-int main() {
-    int V = 5;
-    Graph g(V);
-    g.addEdge(0, 1, 10);
-    g.addEdge(0, 4, 5);
-    g.addEdge(1, 2, 1);
-    g.addEdge(1, 4, 2);
-    g.addEdge(2, 3, 4);
-    g.addEdge(3, 2, 6);
-    g.addEdge(3, 0, 7);
-    g.addEdge(4, 1, 3);
-    g.addEdge(4, 2, 9);
-    g.addEdge(4, 3, 2);
-
-    g.printAdjacencyLists();
-
-    std::cout << "BFS" << std::endl;
-    g.BFS(0);
-    std::cout << std::endl;
-
-    std::cout << "DFS" << std::endl;
-    for (int i = 0; i < V; ++i)
-        g.DFS(i);
-
-    std::cout << "Dijkstra" << std::endl;
-    for (int i = 0; i < V; ++i)
-        g.Dijkstra(i);
-
-    std::cout << "FloydWarshall" << std::endl;
-    g.FloydWarshall();
-
-    return 0;
+void UndirectedGraph::addEdge(int u, int v, int w) {
+    adjLists_[u].push_back(std::make_pair(v, w));
+    adjLists_[v].push_back(std::make_pair(u, w));
 }

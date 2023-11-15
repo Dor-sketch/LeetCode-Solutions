@@ -8,7 +8,7 @@ CXXFLAGS = -Wall -Wextra -std=c++11
 TARGET = GraphApp
 
 # Source files
-SRC = Graph.cpp
+SRC = Graph.cpp main.cpp
 
 # Object files
 OBJ = $(SRC:.cpp=.o)
