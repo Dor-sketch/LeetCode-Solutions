@@ -61,6 +61,41 @@ These algorithms are implemented in my repository, showcasing my grasp of graph 
 3. Use the `make` command to compile the program.
 4. Execute the program to run the algorithms with `./GraphApp`.
 
+### **NEW** - Explore algorithms whith costum input!
+
+- Add your graph in a `.txt` file and see the results:
+
+    ```bash
+        Test 1 passed.
+        0
+        ├── 1
+        └── 2
+
+        Test 2 passed.
+        0
+        ├── 1
+        ├── 2
+        ├── 3
+        └── 4
+
+        Test 3 passed.
+        0
+        ├── 1
+        |   ├── 3
+        |   └── 4
+        └── 2
+            ├── 5
+            └── 6
+
+        Test 4 passed.
+        0
+        └── 1
+            └── 2
+                └── 3
+    ```
+
+    _BFS Algorithms tests example_
+
 ## Problems 🧩
 
 You can find a comprehensive list of problems and solutions in [problems.md](problems.md).

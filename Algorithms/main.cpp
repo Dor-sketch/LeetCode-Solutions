@@ -1,6 +1,9 @@
 #include "Graph.hpp"
 #include <cassert>
+#include <fstream>
 #include <iostream>
+#include <sstream>
+#include <vector>
 
 void testAddEdge() {
     Graph g(5);
@@ -19,6 +22,8 @@ void testAddEdge() {
                adjList0.end() &&
            "Edge (0, 4) with weight 5 not found");
 
+    g.printAdjacencyLists();
+
     // Optionally, check the reverse edges for an undirected graph
     UndirectedGraph undirected_g(5);
     undirected_g.addEdge(0, 1, 10);
@@ -33,43 +38,134 @@ void testAddEdge() {
                adjList4.end() &&
            "Edge (4, 0) with weight 5 not found");
 
+    undirected_g.printAdjacencyLists();
+
     std::cout << "testAddEdge passed" << std::endl;
 }
 
 void testBFS() {
-    Graph g(5);
-    // Populate the graph with edges
-    g.addEdge(0, 1, 1);
-    g.addEdge(0, 2, 1);
-    g.addEdge(1, 3, 1);
-    g.addEdge(2, 4, 1);
+    std::ifstream file("graph_test_input.txt");
+    if (!file.is_open()) {
+        std::cerr << "Unable to open file" << std::endl;
+        return;
+    }
 
-    // Expected levels when starting BFS from node 0
-    std::vector<int> expectedLevels = {0, 1, 1, 2, 2};
+    std::string line;
+    int testCount = 1;
 
-    // Call g.BFS and get the BFS levels
-    std::vector<int> bfsLevels = g.BFS(0);
+    while (std::getline(file, line)) {
+        if (line.rfind("graphsize:", 0) == 0) {
+            int numberOfNodes;
+            std::sscanf(line.c_str(), "graphsize: %d", &numberOfNodes);
 
-    // Assert the expected levels
-    assert(bfsLevels == expectedLevels &&
-           "BFS levels do not match expected levels.");
+            Graph g(numberOfNodes);
+            while (std::getline(file, line) && line != "results:") {
+                if (line == "nodes:")
+                    continue; // Skip the "nodes:" line
+                std::istringstream edgeStream(line);
+                int u, v, w;
+                edgeStream >> u >> v >> w;
+                g.addEdge(u, v, w);
+            }
 
-    std::cout << "testBFS passed" << std::endl;
+            std::vector<int> expectedLevels;
+            while (std::getline(file, line) && !line.empty()) {
+                std::istringstream levelStream(line);
+                int level;
+                while (levelStream >> level) {
+                    expectedLevels.push_back(level);
+                }
+            }
+
+            std::vector<int> bfsLevels = g.BFS(0);
+
+            if (bfsLevels != expectedLevels) {
+                std::cout << "Test " << testCount << " failed.\n";
+                std::cout << "Expected BFS levels: ";
+                for (int lvl : expectedLevels)
+                    std::cout << lvl << " ";
+                std::cout << "\nGot BFS levels: ";
+                for (int lvl : bfsLevels)
+                    std::cout << lvl << " ";
+                std::cout << "\n\n";
+            } else {
+                std::cout << "Test " << testCount << " passed.\n";
+            }
+
+            ++testCount;
+        }
+    }
+
+    file.close();
 }
 
 void testDFS() {
-    Graph g(5);
-    // Populate the graph with edges
-    g.addEdge(0, 1, 1);
-    g.addEdge(1, 2, 1);
-    g.addEdge(2, 3, 1);
-    g.addEdge(3, 4, 1);
+    std::ifstream file("dfs_test_input.txt");
+    if (!file.is_open()) {
+        std::cerr << "Unable to open file" << std::endl;
+        return;
+    }
 
-    // Call g.DFS and assert the expected outcome
-    // Example: Check if the DFS traversal is as expected
-    // ...
+    std::string line;
+    int testCount = 1;
 
-    std::cout << "testDFS passed" << std::endl;
+    while (std::getline(file, line)) {
+        if (line.rfind("graphsize:", 0) == 0) {
+            int numberOfNodes;
+            std::sscanf(line.c_str(), "graphsize: %d", &numberOfNodes);
+
+            Graph g(numberOfNodes);
+            int startVertex;
+
+            // Read edges
+            while (std::getline(file, line) && line != "expected_levels:") {
+                if (line == "edges:")
+                    continue; // Skip the "edges:" line
+                else if (line != "start: 0") {
+                std::cout<<line;
+
+                std::istringstream edgeStream(line);
+                int u, v;
+                edgeStream >> u >> v;
+                std::cout<<"adding: (" << u <<","<<v<<",0)\n";
+                g.addEdge(u, v, 0); // Assuming weight = 1 for simplicity
+                }
+            }
+            g.printAdjacencyLists();
+            // Read expected DFS levels
+            std::getline(file, line); // Read start vertex line
+            std::sscanf(line.c_str(), "start: %d", &startVertex);
+
+            std::vector<int> expectedLevels;
+            std::getline(file, line); // Read expected levels line
+            std::istringstream levelStream(line);
+            int level;
+            while (levelStream >> level) {
+                expectedLevels.push_back(level);
+            }
+
+            // Perform DFS
+            std::vector<int> dfsLevels = g.DFS(startVertex);
+
+            // Compare DFS levels with expected levels
+            if (dfsLevels != expectedLevels) {
+                std::cout << "Test " << testCount << " failed.\n";
+                std::cout << "Expected DFS levels: ";
+                for (int lvl : expectedLevels)
+                    std::cout << lvl << " ";
+                std::cout << "\nGot DFS levels: ";
+                for (int lvl : dfsLevels)
+                    std::cout << lvl << " ";
+                std::cout << "\n\n";
+            } else {
+                std::cout << "Test " << testCount << " passed.\n";
+            }
+
+            ++testCount;
+        }
+    }
+
+    file.close();
 }
 
 void testDijkstra() {

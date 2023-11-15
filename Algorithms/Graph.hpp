@@ -21,7 +21,7 @@ class Graph {
 
     // handles the visualization and returning of levels
     std::vector<int> BFS(int s);
-    void DFS(int s); // to init the DFS
+    std::vector<int> DFS(int s); // to init the DFS
 
     // Shortest path
     void BellmanFord(int s);
@@ -36,7 +36,9 @@ class Graph {
 
     // for the BFS traversal and storing levels.
     std::vector<TreeVisualizer::NodeInfo> BFSUtil(int s);
-    void DFSUtil(int vertex, std::vector<bool> &visited);
+    void DFSUtil(int vertex, int parent, int depth,
+                        std::vector<bool> &visited,
+                        std::vector<TreeVisualizer::NodeInfo> &dfsInfo);
 };
 
 class UndirectedGraph : public Graph {

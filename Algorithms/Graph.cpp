@@ -1,5 +1,6 @@
 #include "Graph.hpp"
 #include <iomanip>
+#include <queue>
 
 // Define color for the node
 constexpr char YELLOW[] = "\033[1;33m";
@@ -47,24 +48,40 @@ void Graph::printAdjacencyLists() {
 
 // ============ Algorithms ===============
 
-void Graph::DFS(int startVertex) {
+std::vector<int> Graph::DFS(int startVertex) {
+    std::vector<TreeVisualizer::NodeInfo> dfsInfo(
+        V_, {-1, -1}); // Initialize parent and depth as -1
     std::vector<bool> visited(V_, false);
-    DFSUtil(startVertex, visited);
-    std::cout << std::endl;
+
+    DFSUtil(startVertex, 0, 0, visited, dfsInfo);
+
+    // Optionally visualize the tree
+    TreeVisualizer visualizer(dfsInfo);
+    visualizer.visualizeTree();
+
+    // Extract levels from shortest_path and return
+    std::vector<int> levels;
+    for (int i = 0; i < V_; ++i) {
+        if (dfsInfo[i].parent != -1 || i == startVertex) {
+            // Node is reachable, so add its level to the vector
+            levels.push_back(dfsInfo[i].level);
+        }
+    }
+
+    return levels;
 }
 
-void Graph::DFSUtil(int vertex, std::vector<bool> &visited) {
+void Graph::DFSUtil(int vertex, int parent, int depth,
+                    std::vector<bool> &visited,
+                    std::vector<TreeVisualizer::NodeInfo> &dfsInfo) {
     visited[vertex] = true;
-    std::cout << LONG_ARROW << OPEN_BRACES << vertex << CLOSE_BRACES;
+    dfsInfo[vertex] = {parent, depth}; // Store parent and depth information
 
-    // Iterate through each pair (neighbor, weight) in the adjacency list of the
-    // current vertex
+    // Iterate through each neighbor
     for (const auto &adjVertex : adjLists_[vertex]) {
-        int neighbor =
-            adjVertex.first; // Extract the neighbor vertex from the pair
+        int neighbor = adjVertex.first;
         if (!visited[neighbor]) {
-            DFSUtil(neighbor,
-                    visited); // Recursive call with the neighbor vertex
+            DFSUtil(neighbor, vertex, depth + 1, visited, dfsInfo);
         }
     }
 }
@@ -80,9 +97,12 @@ std::vector<int> Graph::BFS(int s) {
     visualizer.visualizeTree();
 
     // Extract levels from shortest_path and return
-    std::vector<int> levels(V_);
+    std::vector<int> levels;
     for (int i = 0; i < V_; ++i) {
-        levels[i] = shortest_path[i].level;
+        if (shortest_path[i].parent != -1 || i == s) {
+            // Node is reachable, so add its level to the vector
+            levels.push_back(shortest_path[i].level);
+        }
     }
 
     return levels;
@@ -94,9 +114,14 @@ std::vector<TreeVisualizer::NodeInfo> Graph::BFSUtil(int s) {
     std::vector<bool> visited(V_, false);
     std::queue<int> q;
 
+    for (auto &node : shortest_path) {
+        node.parent = -1;
+        node.level = -1;
+    }
+
     q.push(s);
     visited[s] = true;
-    shortest_path[s] = {0, s};
+    shortest_path[s] = {0, -1};
 
     while (!q.empty()) {
         int cur_node = q.front();
