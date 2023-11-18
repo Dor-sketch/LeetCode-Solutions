@@ -2,9 +2,9 @@
 
 Welcome to the LeetCode Toolkit, my extensive solutions repository! As a senior software engineering student, this project captures my journey through the world of algorithmic challenges, focusing on enhancing my problem-solving skills. It features a variety of algorithmic domains, with a special emphasis on graph theory and its practical applications. Recently, I have started using this platform more actively. While I've included a selection of my work here, not everything is listed. For a complete view of my solutions and progress, please visit my full LeetCode profile at [Dor-sketch](https://leetcode.com/Dor-sketch/).
 
----
-
 ![LeetCode Solutions Cover](./cover.png)
+
+---
 
 ## NEW: LeetCode Solutions Downloader 📥
 
