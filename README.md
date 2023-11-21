@@ -61,7 +61,7 @@ These algorithms are implemented in my repository, showcasing my grasp of graph 
 3. Use the `make` command to compile the program.
 4. Execute the program to run the algorithms with `./GraphApp`.
 
-### **NEW** - Explore algorithms whith costum input!
+### **NEW** - Explore Algorithms with Costum Inputs!
 
 - Add your graph in a `.txt` file and see the results:
 
