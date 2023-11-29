@@ -49,11 +49,23 @@ void Graph::printAdjacencyLists() {
 // ============ Algorithms ===============
 
 std::vector<int> Graph::DFS(int startVertex) {
-    std::vector<TreeVisualizer::NodeInfo> dfsInfo(
-        V_, {-1, -1}); // Initialize parent and depth as -1
+    std::vector<TreeVisualizer::NodeInfo> dfsInfo(V_);
+
+    for (auto &node : dfsInfo) {
+        node.parent = -1;
+        node.level = -1;
+    }
+
+    dfsInfo[startVertex] = {0, -1};
     std::vector<bool> visited(V_, false);
 
+    visited[startVertex] = true;
+    // Update startVertex as visited and depth as 0
+
     DFSUtil(startVertex, 0, 0, visited, dfsInfo);
+
+    // make sure root parent is -1
+    dfsInfo[startVertex].parent = -1;
 
     // Optionally visualize the tree
     TreeVisualizer visualizer(dfsInfo);
@@ -67,7 +79,6 @@ std::vector<int> Graph::DFS(int startVertex) {
             levels.push_back(dfsInfo[i].level);
         }
     }
-
     return levels;
 }
 
@@ -75,7 +86,7 @@ void Graph::DFSUtil(int vertex, int parent, int depth,
                     std::vector<bool> &visited,
                     std::vector<TreeVisualizer::NodeInfo> &dfsInfo) {
     visited[vertex] = true;
-    dfsInfo[vertex] = {parent, depth}; // Store parent and depth information
+    dfsInfo[vertex] = {depth, parent};
 
     // Iterate through each neighbor
     for (const auto &adjVertex : adjLists_[vertex]) {

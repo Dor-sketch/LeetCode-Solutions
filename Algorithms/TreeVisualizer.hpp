@@ -34,6 +34,8 @@ class TreeVisualizer {
         if (indexToNode.empty())
             return;
         Node *root = indexToNode[0]; // Assuming 0 is the root index
+        if (root == nullptr)
+            return;
         std::set<Node *> visited;    // To keep track of visited nodes
         root->printTree(visited);
     }
@@ -104,7 +106,9 @@ class TreeVisualizer {
         // Set up child relationships
         for (int i = 0; i < shortest_path.size(); ++i) {
             int parentIndex = shortest_path[i].parent;
-            if (parentIndex != -1) { // Assuming -1 indicates no parent
+            // avoid adding the root as a child
+            if (parentIndex != -1) {
+                // Add the current node as a child of its parent
                 indexToNode[parentIndex]->_children.push_back(indexToNode[i]);
             }
         }

@@ -6,6 +6,7 @@
 #include <vector>
 
 void testAddEdge() {
+    std::cout<<"testAddEdge\n";
     Graph g(5);
     g.addEdge(0, 1, 10);
     g.addEdge(0, 4, 5);
@@ -44,6 +45,7 @@ void testAddEdge() {
 }
 
 void testBFS() {
+    std::cout<<"testBFS\n";
     std::ifstream file("graph_test_input.txt");
     if (!file.is_open()) {
         std::cerr << "Unable to open file" << std::endl;
@@ -100,6 +102,7 @@ void testBFS() {
 }
 
 void testDFS() {
+    std::cout<<"testDFS\n";
     std::ifstream file("dfs_test_input.txt");
     if (!file.is_open()) {
         std::cerr << "Unable to open file" << std::endl;
@@ -117,6 +120,11 @@ void testDFS() {
             Graph g(numberOfNodes);
             int startVertex;
 
+            // Read start vertex
+            std::getline(file, line); // Read start vertex line
+            std::sscanf(line.c_str(), "start: %d", &startVertex);
+            std::cout<<"startVertex: "<<startVertex<<"\n";
+
             // Read edges
             while (std::getline(file, line) && line != "expected_levels:") {
                 if (line == "edges:")
@@ -127,14 +135,13 @@ void testDFS() {
                 std::istringstream edgeStream(line);
                 int u, v;
                 edgeStream >> u >> v;
-                std::cout<<"adding: (" << u <<","<<v<<",0)\n";
+                std::cout<<" adding: (" << u <<","<<v<<",0)\n";
                 g.addEdge(u, v, 0); // Assuming weight = 1 for simplicity
                 }
             }
+
             g.printAdjacencyLists();
-            // Read expected DFS levels
-            std::getline(file, line); // Read start vertex line
-            std::sscanf(line.c_str(), "start: %d", &startVertex);
+
 
             std::vector<int> expectedLevels;
             std::getline(file, line); // Read expected levels line
@@ -169,6 +176,7 @@ void testDFS() {
 }
 
 void testDijkstra() {
+    std::cout<<"testDijkstra\n";
     Graph g(5);
     // Populate the graph with edges
     g.addEdge(0, 1, 2);
