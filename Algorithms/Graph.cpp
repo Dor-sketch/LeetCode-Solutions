@@ -1,6 +1,7 @@
 #include "Graph.hpp"
 #include <iomanip>
 #include <queue>
+#include <unordered_set>
 
 // Define color for the node
 constexpr char YELLOW[] = "\033[1;33m";
