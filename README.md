@@ -1,6 +1,16 @@
 # LeetCode Toolkit: Solutions, Algorithms & Automated Downloader 🤖🧩
 
-Welcome to the LeetCode Toolkit, my extensive solutions repository! As a senior software engineering student, this project captures my journey through the world of algorithmic challenges, focusing on enhancing my problem-solving skills. It features a variety of algorithmic domains, with a special emphasis on graph theory and its practical applications. Recently, I have started using this platform more actively. While I've included a selection of my work here, not everything is listed. For a complete view of my solutions and progress, please visit my full LeetCode profile at [Dor-sketch](https://leetcode.com/Dor-sketch/).
+Welcome to the LeetCode Toolkit, my extensive solutions repository!
+
+As a senior software engineering student, this project captures my journey through the world of algorithmic challenges, focusing on enhancing my problem-solving skills.
+
+It features a variety of algorithmic domains, with a special emphasis on graph theory and its practical applications, including:
+
+- **Graph Algorithms in C++**: A comprehensive implementation of graph algorithms, such as BFS, DFS, Dijkstra's, Bellman-Ford, and Floyd-Warshall.
+
+- **C Examples**: A collection of C programs, including a [Magic Square checker](./C_Examples/magic/README.md), and [Hash-Table](./C_Examples/hash.c) implementation
+
+Recently, I have started using this platform more actively. For a complete view of my solutions and progress, please visit my full LeetCode profile at [Dor-sketch](https://leetcode.com/Dor-sketch/).
 
 ![LeetCode Solutions Cover](./cover.png)
 
@@ -38,7 +48,7 @@ Suggestions and contributions to enhance this downloader are welcome! Please fee
 
 ## Graph Algorithms: An Overview 🌐🔍
 
-Graph algorithms are a cornerstone of computer science, which I've delved into and implemented in this repository. These algorithms play a pivotal role in tackling complex problems across various network structures like social networks 🌍, computer networks 💻, and biological networks 🧬. Below is a succinct overview of some key graph algorithms and their real-world applications, demonstrated in [Graph.cpp](Algorithms/Graph.cpp):
+Graph algorithms are a cornerstone of computer science, which I've delved into and implemented in this repository. These algorithms play a pivotal role in tackling complex problems across various network structures like social networks 🌍, computer networks 💻, and biological networks 🧬. Below is a succinct overview of some key graph algorithms and their real-world applications, demonstrated in [Graph.cpp](C++_GraphAlgorithms/Graph.cpp):
 
 - **Depth-First Search (DFS)** 🌳: This algorithm performs a deep traversal of a graph, exploring as far down each branch as possible before backtracking. It's instrumental in solving puzzles, analyzing networks, and in game playing algorithms.
 
@@ -57,7 +67,7 @@ These algorithms are implemented in my repository, showcasing my grasp of graph 
 ### How to Use - GraphApp
 
 1. Clone the repository to your local machine.
-2. Navigate to the [Algorithms](Algorithms) directory.
+2. Navigate to the [C++_GraphAlgorithms](C++_GraphAlgorithms) directory.
 3. Use the `make` command to compile the program.
 4. Execute the program to run the algorithms with `./GraphApp`.
 
@@ -119,8 +129,6 @@ New solutions are added regularly via the [LeetCode Downloader](download.py). Ol
     ├── Dynamic Programming/
     └── ...
 ```
-
-
 
 ## Contributing 💡
 
