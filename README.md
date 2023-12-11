@@ -1,26 +1,22 @@
-# LeetCode Toolkit: Solutions, Algorithms & Automated Downloader 🤖🧩
+# LeetCode Toolkit: Solutions, Algorithms & Automated Downloader 🌟
 
-Welcome to the LeetCode Toolkit, my extensive solutions repository!
+## Overview 🌐
 
-As a senior software engineering student, this project captures my journey through the world of algorithmic challenges, focusing on enhancing my problem-solving skills.
+👋 Welcome to my **LeetCode Toolkit**! This repository is a curated collection of my experiences and learnings in the realm of algorithmic challenges. Dive into a variety of solutions and tools, **Here are some key highlights:**
 
-It features a variety of algorithmic domains, with a special emphasis on graph theory and its practical applications, including:
+| **📈 Graph Algorithms in C++** | **🔍 C Programming Examples** | **🐍 Python Solutions Downloader Script** |
+|-------------------------------|-------------------------------|---------------------------------------|
+| Explore graph theory with implementations of algorithms like BFS, DFS, Dijkstra's, Bellman-Ford, and Floyd-Warshall.<br><br>Includes a [tree visualizer](./C++_GraphAlgorithms/TreeVisualizer.hpp) for custom input and visualization. | Features a [Magic Square Checker](./C_Examples/magic/README.md) and a [Hash-Table](./C_Examples/hash.c) implementation.<br><br>🎓 _For more examples of C coding techniques, take a look at these mini-repositories:_ 📜[Cbits](https://github.com/Dor-sketch/CBits), _and_ 👾[TextAnalysisC](https://github.com/Dor-sketch/TextAnalysisC).| Enhance your LeetCode experience with a Python script for downloading accepted solutions.<br><br>Check out the [LeetCode Downloader](download.py) for efficient solution archiving. |
 
-- **Graph Algorithms in C++**: A comprehensive implementation of graph algorithms, such as BFS, DFS, Dijkstra's, Bellman-Ford, and Floyd-Warshall.
+---
 
-- **C Examples**: A collection of C programs, including a [Magic Square checker](./C_Examples/magic/README.md), and [Hash-Table](./C_Examples/hash.c) implementation
-
-Recently, I have started using this platform more actively. For a complete view of my solutions and progress, please visit my full LeetCode profile at [Dor-sketch](https://leetcode.com/Dor-sketch/).
+📚 While I've been actively engaged on LeetCode, I've stopped uploading new solutions to this repository. For the most current view of my work, techniques, and progress, please visit my LeetCode profile: [Dor-sketch](https://leetcode.com/Dor-sketch/).
 
 ![LeetCode Solutions Cover](./cover.png)
 
 ---
 
 ## NEW: LeetCode Solutions Downloader 📥
-
-### Description
-
-I've developed a Python script 🐍 to automate the downloading of accepted solutions from my LeetCode account: [LeetCode Downloader](download.py). This tool smartly navigates through submission history, identifying and storing accepted solutions for easy access and future reference.
 
 ### Features
 
