@@ -201,4 +201,32 @@ void new_square(int N) {
             cols = 0;
             rows++;
         }
-        c = get_char_and_skip_spa
+        c = get_char_and_skip_spaces();
+    } /* if N^2 numbers were readen the loop ends whith i = N and j = 0 */
+
+    putchar('\n');
+
+    print_mat_with_index(mat, N);
+
+    if (is_square(rows, cols, c, N)) {
+        print_mat(mat, N);
+        if (!(is_magic(mat, N)))
+            printf("Not a magic square...\n");
+    }
+
+    free_mat(mat, N);
+}
+
+/* Get matrix size from user, build the matrix and check if it's a magic square.
+ */
+int main(void) {
+    int size;
+    printf("Please enter a number for the square's size (1-9): ");
+    while (scanf("%d", &size) != 1 || size < 1 ||
+           size > 9) /* check if the input is valid */
+        printf("Invalid input. Please enter a number for the square's size "
+               "(1-9): ");
+    printf("The square's size is %d.\n", size);
+    new_square(size);
+    return 0;
+}
