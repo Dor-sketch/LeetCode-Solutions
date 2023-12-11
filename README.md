@@ -8,8 +8,6 @@
 |-------------------------------|-------------------------------|---------------------------------------|
 | Explore graph theory with implementations of algorithms like BFS, DFS, Dijkstra's, Bellman-Ford, and Floyd-Warshall.<br><br>Includes a [tree visualizer](./C++_GraphAlgorithms/TreeVisualizer.hpp) for custom input and visualization. | Features a [Magic Square Checker](./C_Examples/magic/README.md) and a [Hash-Table](./C_Examples/hash.c) implementation.<br><br>🎓 _For more examples of C coding techniques, take a look at these mini-repositories:_ 📜[Cbits](https://github.com/Dor-sketch/CBits), _and_ 👾[TextAnalysisC](https://github.com/Dor-sketch/TextAnalysisC).| Enhance your LeetCode experience with a Python script for downloading accepted solutions.<br><br>Check out the [LeetCode Downloader](download.py) for efficient solution archiving. |
 
----
-
 📚 While I've been actively engaged on LeetCode, I've stopped uploading new solutions to this repository. For the most current view of my work, techniques, and progress, please visit my LeetCode profile: [Dor-sketch](https://leetcode.com/Dor-sketch/).
 
 ![LeetCode Solutions Cover](./cover.png)
@@ -42,6 +40,8 @@ _The submission history is parsed from the LeetCode website, and accepted soluti
 
 Suggestions and contributions to enhance this downloader are welcome! Please feel free to fork the repository, make improvements, and submit a pull request.
 
+---
+
 ## Graph Algorithms: An Overview 🌐🔍
 
 Graph algorithms are a cornerstone of computer science, which I've delved into and implemented in this repository. These algorithms play a pivotal role in tackling complex problems across various network structures like social networks 🌍, computer networks 💻, and biological networks 🧬. Below is a succinct overview of some key graph algorithms and their real-world applications, demonstrated in [Graph.cpp](C++_GraphAlgorithms/Graph.cpp):
@@ -57,8 +57,6 @@ Graph algorithms are a cornerstone of computer science, which I've delved into a
 - **Floyd-Warshall Algorithm** 🔗: A dynamic programming approach for finding shortest paths in a weighted graph with positive or negative edge weights, without negative cycles.
 
 These algorithms are implemented in my repository, showcasing my grasp of graph theory and its practical applications in solving real-world problems.
-
----
 
 ### How to Use - GraphApp
 
@@ -101,6 +99,8 @@ These algorithms are implemented in my repository, showcasing my grasp of graph 
     ```
 
     _BFS Algorithms tests example_
+
+---
 
 ## Problems 🧩
 
