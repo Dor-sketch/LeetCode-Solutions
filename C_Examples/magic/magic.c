@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define OK 1
-#define FALSE 0
 #define TRUE 1
+#define FALSE 0
 
 /* is_valid_char: return the input if it's a digit or a white space (backtab,
  * spaces or next line).
@@ -36,7 +35,7 @@ char get_char_and_skip_spaces(void) {
 int get_num(char c, int *input_num) {
     int num, is_positive;
     num = 0;
-    is_positive = OK;
+    is_positive = TRUE;
 
     if (c == '-') { /* maybe a negative number */
         if (!is_valid_char(c = getchar()))
@@ -56,12 +55,12 @@ int get_num(char c, int *input_num) {
 }
 
 /* A function to check if the user added the required quantity of numbers.
-    return OK if passes the requirmetnsthe or prints the problem and return
+    return TRUE if passes the requirmetnsthe or prints the problem and return
    False  */
 int is_square(int i, int j, char c, int N) {
     if (i == N && j == 0) {
         if (c == EOF)
-            return OK;
+            return TRUE;
         else
             printf("Too many numbers in the input.\n");
     } else
@@ -130,7 +129,7 @@ int check_row_col(int **mat, int N) {
 }
 
 /* A function to check if the sum in every row, colum and cross are even
-    if even - return OK, other - return FALSE */
+    if even - return TRUE, other - return FALSE */
 int is_magic(int **mat, int N) {
     if (!check_diagonal(mat, N))
         return FALSE;
@@ -216,6 +215,9 @@ void new_square(int N) {
 
     free_mat(mat, N);
 }
+
+/* create_histogram: ... */
+
 
 /* Get matrix size from user, build the matrix and check if it's a magic square.
  */
