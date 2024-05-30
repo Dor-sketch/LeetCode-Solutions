@@ -1,6 +1,9 @@
-# LeetCode Toolkit: Solutions, Algorithms & Automated Downloader 🌟
+<div align="center">
+  <img src="https://github.com/Dor-sketch/LeetCode-Solutions/assets/138825033/9b51c3d6-4ac7-4d59-a07f-1c88b674996f" alt="Top Badget" style="display: block; margin-bottom: 0;"/>
+  <h1>LeetCode Toolkit:<br>Solutions, Algorithms & Automated Downloader</h1>
+</div>
 
-## Overview 🌐
+## Overview
 
 👋 Welcome to my **LeetCode Toolkit**! This repository is a curated collection of my experiences and learnings in the realm of algorithmic challenges. Dive into a variety of solutions and tools, **Here are some key highlights:**
 
@@ -9,8 +12,6 @@
 | Explore graph theory with implementations of algorithms like BFS, DFS, Dijkstra's, Bellman-Ford, and Floyd-Warshall.<br><br>Includes a [tree visualizer](./C++_GraphAlgorithms/TreeVisualizer.hpp) for custom input and visualization. | Features a [Magic Square Checker](./C_Examples/magic/README.md) and a [Hash-Table](./C_Examples/hash.c) implementation.<br><br>🎓 _For more examples of C coding techniques, take a look at these mini-repositories:_ 📜[Cbits](https://github.com/Dor-sketch/CBits), _and_ 👾[TextAnalysisC](https://github.com/Dor-sketch/TextAnalysisC).| Enhance your LeetCode experience with a Python script for downloading accepted solutions.<br><br>Check out the [LeetCode Downloader](download.py) for efficient solution archiving. |
 
 📚 While I've been actively engaged on LeetCode, I've stopped uploading new solutions to this repository. For the most current view of my work, techniques, and progress, please visit my LeetCode profile: [Dor-sketch](https://leetcode.com/Dor-sketch/).
-
-![LeetCode Solutions Cover](./cover.png)
 
 ---
 
